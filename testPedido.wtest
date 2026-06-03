@@ -1,0 +1,97 @@
+import pedido.pedido
+import productos.*
+import porciones.*
+
+describe "Tests minimos para validar un pedido" {
+
+  /*
+    Reinicio necesario para mantener consistencia en los tests
+    Solo en el caso que un test modifica estado global y otro
+    test observa ese mismo estado.
+    Para estos ejemplos no hace diferencia, pero es buena practica
+  */
+  
+  method initialize() {
+      pedido.productos().clear()
+      hamburguesa.porcion(chica)
+      ensalada.porcion(chica)
+      papasFritas.porcion(chica)
+      gaseosa.porcion(chica)
+      agua.porcion(chica)
+  }
+
+  test "agregar productos a un pedido" {
+      pedido.agregarProducto(hamburguesa)
+      pedido.agregarProducto(gaseosa)
+
+      assert.equals(2, pedido.productos().size())
+  }
+
+  test "calcula correctamente el precio total" {
+      pedido.agregarProducto(hamburguesa)
+      pedido.agregarProducto(papasFritas)
+      pedido.agregarProducto(gaseosa)
+
+      assert.equals(10000, pedido.precioDelPedido())
+  }
+
+  test "calcula correctamente las calorias totales" {
+      pedido.agregarProducto(hamburguesa)
+      pedido.agregarProducto(papasFritas)
+      pedido.agregarProducto(gaseosa)
+
+      assert.equals(1000, pedido.caloriasTotales())
+  }
+
+  test "obtiene los productos veganos" {
+      pedido.agregarProducto(hamburguesa)
+      pedido.agregarProducto(ensalada)
+      pedido.agregarProducto(agua)
+
+      assert.equals(
+          [ensalada, agua],
+          pedido.productosVeganos()
+      )
+  }
+
+  test "detecta productos con mas de 400 calorias" {
+      pedido.agregarProducto(agua)
+      pedido.agregarProducto(hamburguesa)
+
+      assert.that(pedido.tieneProductosConMasDe400Calorias())
+  }
+
+  test "no detecta productos con mas de 400 calorias cuando no existen" {
+      pedido.agregarProducto(agua)
+      pedido.agregarProducto(gaseosa)
+
+      assert.notThat(
+          pedido.tieneProductosConMasDe400Calorias()
+      )
+  }
+
+  test "modificar la porcion modifica el precio del producto" {
+      hamburguesa.porcion(grande)
+
+      assert.equals(10000, hamburguesa.precio())
+  }
+
+  test "el pedido refleja correctamente cambios de estado en un producto" {
+      pedido.agregarProducto(hamburguesa)
+
+      assert.equals(5000, pedido.precioDelPedido())
+
+      hamburguesa.porcion(grande)
+
+      assert.equals(10000, pedido.precioDelPedido())
+  }
+
+  test "agrandar combo cambia todas las porciones a grande" {
+      pedido.agregarProducto(hamburguesa)
+      pedido.agregarProducto(gaseosa)
+
+      pedido.agrandarCombo()
+
+      assert.equals(14000, pedido.precioDelPedido())
+  }
+}
