@@ -8,9 +8,9 @@
 
 ## ⚙️ Datos necesarios y obligatorios a completar
 
-* **APELLIDO, NOMBRE**:
-* **COMISIÓN**:
-* **DNI**:
+* **APELLIDO, NOMBRE**: PINTOS, MAURICIO
+* **COMISIÓN**: 7
+* **DNI**: 30789456
 
 ---
 
