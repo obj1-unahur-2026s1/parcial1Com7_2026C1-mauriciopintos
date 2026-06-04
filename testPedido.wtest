@@ -51,7 +51,7 @@ describe "Tests minimos para validar un pedido" {
 
     /*
     Solamente cambiamos la inicialización de los tests, manteniendo los nombres
-    de los objetos originales como variables y siguen funcioando correctamente
+    de los objetos originales como variables y siguen funcionando correctamente
     "nada se pierde, todo se transforma"
     */
     test "agregar productos a un pedido" {
