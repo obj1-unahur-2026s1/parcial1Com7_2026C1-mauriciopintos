@@ -1,11 +1,23 @@
 import porciones.*
 
+// Ahora, centralizamos lógica común en una clase Producto
+class Producto {
+    var property precioBase
+    var property porcion = chica
+    var property calorias 
+    var property esVegano
+
+    method precio() = precioBase * porcion.ajustePrecio()
+}
+
+/*
+En la solucion anterior, teniamos multiples objetos con logica repetida
 object hamburguesa {
     var property precioBase = 5000
     var property porcion = chica 
     method calorias() = 500
     method precio() = precioBase * porcion.ajustePrecio()
-    method esVagano() = false
+    method esVegano() = false
 }
 
 object ensalada {
@@ -13,7 +25,7 @@ object ensalada {
     var property porcion = chica 
     method calorias() = 280
     method precio() = precioBase * porcion.ajustePrecio()
-    method esVagano() = true
+    method esVegano() = true
 }
 
 object papasFritas {
@@ -21,7 +33,7 @@ object papasFritas {
     var property porcion = chica 
     method calorias() = 320
     method precio() = precioBase * porcion.ajustePrecio()
-    method esVagano() = false
+    method esVegano() = false
 }
 
 object gaseosa {
@@ -29,7 +41,7 @@ object gaseosa {
     var property porcion = chica 
     method calorias() = 180
     method precio() = precioBase * porcion.ajustePrecio()
-    method esVagano() = false
+    method esVegano() = false
 }
 
 
@@ -38,5 +50,7 @@ object agua {
     var property porcion = chica 
     method calorias() = 5
     method precio() = precioBase * porcion.ajustePrecio()
-    method esVagano() = true
+    method esVegano() = true
 }
+
+*/

@@ -1,97 +1,131 @@
-import pedido.pedido
-import productos.*
+import pedido.Pedido
+import productos.Producto
 import porciones.*
 
 describe "Tests minimos para validar un pedido" {
 
-  /*
-    Reinicio necesario para mantener consistencia en los tests
-    Solo en el caso que un test modifica estado global y otro
-    test observa ese mismo estado.
-    Para estos ejemplos no hace diferencia, pero es buena practica
-  */
-  
-  method initialize() {
-      pedido.productos().clear()
-      hamburguesa.porcion(chica)
-      ensalada.porcion(chica)
-      papasFritas.porcion(chica)
-      gaseosa.porcion(chica)
-      agua.porcion(chica)
-  }
+    /*
+    Configuración necesaria para mantener consistencia
+    con los tests originales
+    */
 
-  test "agregar productos a un pedido" {
-      pedido.agregarProducto(hamburguesa)
-      pedido.agregarProducto(gaseosa)
+    var pedido
+    var hamburguesa
+    var ensalada
+    var papasFritas
+    var gaseosa
+    var agua
 
-      assert.equals(2, pedido.productos().size())
-  }
+    method initialize() {
+        pedido = new Pedido()
 
-  test "calcula correctamente el precio total" {
-      pedido.agregarProducto(hamburguesa)
-      pedido.agregarProducto(papasFritas)
-      pedido.agregarProducto(gaseosa)
+        // Instanciación usando el constructor primitivo
+        hamburguesa = new Producto(
+            precioBase = 5000, 
+            calorias = 500,
+            esVegano =false
+            )
 
-      assert.equals(10000, pedido.precioDelPedido())
-  }
+        ensalada = new Producto(
+            precioBase = 7000,
+            calorias = 280,
+            esVegano = true
+            )
 
-  test "calcula correctamente las calorias totales" {
-      pedido.agregarProducto(hamburguesa)
-      pedido.agregarProducto(papasFritas)
-      pedido.agregarProducto(gaseosa)
+        papasFritas = new Producto(
+            precioBase = 3000,
+            calorias = 320,
+            esVegano = false)
+            
+        gaseosa = new Producto(
+            precioBase = 2000,
+            calorias = 180,
+            esVegano = false
+            )
 
-      assert.equals(1000, pedido.caloriasTotales())
-  }
+        agua = new Producto(
+            precioBase = 1500,
+            calorias = 5,
+            esVegano = true)
+    }
 
-  test "obtiene los productos veganos" {
-      pedido.agregarProducto(hamburguesa)
-      pedido.agregarProducto(ensalada)
-      pedido.agregarProducto(agua)
+    /*
+    Solamente cambiamos la inicialización de los tests, manteniendo los nombres
+    de los objetos originales como variables y siguen funcioando correctamente
+    "nada se pierde, todo se transforma"
+    */
+    test "agregar productos a un pedido" {
+        pedido.agregarProducto(hamburguesa)
+        pedido.agregarProducto(gaseosa)
 
-      assert.equals(
-          [ensalada, agua],
-          pedido.productosVeganos()
-      )
-  }
+        assert.equals(2, pedido.productos().size())
+    }
 
-  test "detecta productos con mas de 400 calorias" {
-      pedido.agregarProducto(agua)
-      pedido.agregarProducto(hamburguesa)
+    test "calcula correctamente el precio total" {
+        pedido.agregarProducto(hamburguesa)
+        pedido.agregarProducto(papasFritas)
+        pedido.agregarProducto(gaseosa)
 
-      assert.that(pedido.tieneProductosConMasDe400Calorias())
-  }
+        assert.equals(10000, pedido.precioDelPedido())
+    }
 
-  test "no detecta productos con mas de 400 calorias cuando no existen" {
-      pedido.agregarProducto(agua)
-      pedido.agregarProducto(gaseosa)
+    test "calcula correctamente las calorias totales" {
+        pedido.agregarProducto(hamburguesa)
+        pedido.agregarProducto(papasFritas)
+        pedido.agregarProducto(gaseosa)
 
-      assert.notThat(
-          pedido.tieneProductosConMasDe400Calorias()
-      )
-  }
+        assert.equals(1000, pedido.caloriasTotales())
+    }
 
-  test "modificar la porcion modifica el precio del producto" {
-      hamburguesa.porcion(grande)
+    test "obtiene los productos veganos" {
+        pedido.agregarProducto(hamburguesa)
+        pedido.agregarProducto(ensalada)
+        pedido.agregarProducto(agua)
 
-      assert.equals(10000, hamburguesa.precio())
-  }
+        assert.equals(
+            [ensalada, agua],
+            pedido.productosVeganos()
+        )
+    }
 
-  test "el pedido refleja correctamente cambios de estado en un producto" {
-      pedido.agregarProducto(hamburguesa)
+    test "detecta productos con mas de 400 calorias" {
+        pedido.agregarProducto(agua)
+        pedido.agregarProducto(hamburguesa)
 
-      assert.equals(5000, pedido.precioDelPedido())
+        assert.that(pedido.tieneProductosConMasDe400Calorias())
+    }
 
-      hamburguesa.porcion(grande)
+    test "no detecta productos con mas de 400 calorias cuando no existen" {
+        pedido.agregarProducto(agua)
+        pedido.agregarProducto(gaseosa)
 
-      assert.equals(10000, pedido.precioDelPedido())
-  }
+        assert.notThat(
+            pedido.tieneProductosConMasDe400Calorias()
+        )
+    }
 
-  test "agrandar combo cambia todas las porciones a grande" {
-      pedido.agregarProducto(hamburguesa)
-      pedido.agregarProducto(gaseosa)
+    test "modificar la porcion modifica el precio del producto" {
+        hamburguesa.porcion(grande)
 
-      pedido.agrandarCombo()
+        assert.equals(10000, hamburguesa.precio())
+    }
 
-      assert.equals(14000, pedido.precioDelPedido())
-  }
+    test "el pedido refleja correctamente cambios de estado en un producto" {
+        pedido.agregarProducto(hamburguesa)
+
+        assert.equals(5000, pedido.precioDelPedido())
+
+        hamburguesa.porcion(grande)
+
+        assert.equals(10000, pedido.precioDelPedido())
+    }
+
+    test "agrandar combo cambia todas las porciones a grande" {
+        pedido.agregarProducto(hamburguesa)
+        pedido.agregarProducto(gaseosa)
+
+        pedido.agrandarCombo()
+
+        assert.equals(14000, pedido.precioDelPedido())
+    }
 }

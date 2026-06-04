@@ -1,3 +1,8 @@
+/*
+Estos se pueden mantener como objetos WKO (singleton),
+porque funcionan como referencias globales estáticas
+del sistema, manteniendo consistencia.
+*/ 
 object chica {
     method ajustePrecio() = 1
 }
