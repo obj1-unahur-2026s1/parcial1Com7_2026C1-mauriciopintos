@@ -14,7 +14,7 @@ object pedido {
     method agregarProducto(producto) { productos.add(producto) }
     method precioDelPedido() = productos.sum({p => p.precio()})
     method caloriasTotales() = productos.sum({p => p.calorias()})
-    method productosVeganos() = productos.filter({p => p.esVagano()})
+    method productosVeganos() = productos.filter({p => p.esVegano()})
     method tieneProductosConMasDe400Calorias() = productos.any({p => p.calorias() > 400})
     method agrandarCombo() {
       productos.forEach({p => p.porcion(grande)})
