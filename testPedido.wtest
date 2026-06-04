@@ -1,5 +1,5 @@
 import pedido.Pedido
-import productos.Producto
+import productos.*
 import porciones.*
 
 describe "Tests minimos para validar un pedido" {
@@ -20,38 +20,36 @@ describe "Tests minimos para validar un pedido" {
         pedido = new Pedido()
 
         // Instanciación usando el constructor primitivo
-        hamburguesa = new Producto(
+        hamburguesa = new ProductoNoVegano(
             precioBase = 5000, 
-            calorias = 500,
-            esVegano =false
+            calorias = 500
             )
 
-        ensalada = new Producto(
+        ensalada = new ProductoVegano(
             precioBase = 7000,
-            calorias = 280,
-            esVegano = true
+            calorias = 280
             )
 
-        papasFritas = new Producto(
+        papasFritas = new ProductoNoVegano(
             precioBase = 3000,
-            calorias = 320,
-            esVegano = false)
+            calorias = 320
+            )
             
-        gaseosa = new Producto(
+        gaseosa = new ProductoNoVegano(
             precioBase = 2000,
-            calorias = 180,
-            esVegano = false
+            calorias = 180
             )
 
-        agua = new Producto(
+        agua = new ProductoVegano(
             precioBase = 1500,
-            calorias = 5,
-            esVegano = true)
+            calorias = 5
+            )
     }
 
     /*
     Solamente cambiamos la inicialización de los tests, manteniendo los nombres
-    de los objetos originales como variables y siguen funcioando correctamente
+    de los objetos originales como variables y siguen funcionando correctamente.
+    En caso de tener calculos sobre productos veganos, deberémos actualzar el valor
     "nada se pierde, todo se transforma"
     */
     test "agregar productos a un pedido" {

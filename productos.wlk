@@ -1,56 +1,24 @@
 import porciones.*
 
-// Ahora, centralizamos lógica común en una clase Producto
+/*
+Ahora, podríamos definir, quizás dos o más categorias de productos,
+veganos y no veganos, por ejemplo, pero todos heredan
+el comportamiento común centralizado en la clase Producto.
+Para este caso, podemos incorporar que el producto vegano tiene un precio
+diferencial, con un descuento promocional de 5%, por ejemplo.
+*/
 class Producto {
     var property precioBase
     var property porcion = chica
     var property calorias 
-    var property esVegano
-
     method precio() = precioBase * porcion.ajustePrecio()
 }
 
-/*
-En la solucion anterior, teniamos multiples objetos con logica repetida
-object hamburguesa {
-    var property precioBase = 5000
-    var property porcion = chica 
-    method calorias() = 500
-    method precio() = precioBase * porcion.ajustePrecio()
-    method esVegano() = false
+class ProductoVegano inherits Producto {
+    const property esVegano = true
+    override method precio() = super() * 0.95 
 }
 
-object ensalada {
-    var property precioBase = 7000
-    var property porcion = chica 
-    method calorias() = 280
-    method precio() = precioBase * porcion.ajustePrecio()
-    method esVegano() = true
+class ProductoNoVegano inherits Producto {
+    const property esVegano = false
 }
-
-object papasFritas {
-    var property precioBase = 3000
-    var property porcion = chica 
-    method calorias() = 320
-    method precio() = precioBase * porcion.ajustePrecio()
-    method esVegano() = false
-}
-
-object gaseosa {
-    var property precioBase = 2000
-    var property porcion = chica 
-    method calorias() = 180
-    method precio() = precioBase * porcion.ajustePrecio()
-    method esVegano() = false
-}
-
-
-object agua {
-    var property precioBase = 1500
-    var property porcion = chica 
-    method calorias() = 5
-    method precio() = precioBase * porcion.ajustePrecio()
-    method esVegano() = true
-}
-
-*/
