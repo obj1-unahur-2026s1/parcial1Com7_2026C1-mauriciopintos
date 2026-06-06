@@ -12,13 +12,19 @@ class Producto {
     var property porcion = chica
     var property calorias 
     method precio() = precioBase * porcion.ajustePrecio()
+    // Opcion aceptable con metodo abstracto, pero duplica código
+    // method precio()
+    method esVegano()
 }
 
 class ProductoVegano inherits Producto {
-    const property esVegano = true
-    override method precio() = super() * 0.95 
+    
+    override method precio() = super() * 0.95
+    // override method precio() = precioBase * porcion.ajustePrecio() * 0.95
+    override method esVegano() = true
+
 }
 
 class ProductoNoVegano inherits Producto {
-    const property esVegano = false
+    override method esVegano() = false
 }
