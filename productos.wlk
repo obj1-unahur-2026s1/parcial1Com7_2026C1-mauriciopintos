@@ -4,8 +4,8 @@ import porciones.*
 class Producto {
     var property precioBase
     var property porcion = chica
-    var property calorias 
-    var property esVegano
+    const property calorias 
+    const property esVegano
 
     method precio() = precioBase * porcion.ajustePrecio()
 }
